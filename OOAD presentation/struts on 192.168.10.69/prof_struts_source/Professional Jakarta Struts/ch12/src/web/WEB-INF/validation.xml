@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
+
+<form-validation>
+    <global>
+        <constant>
+            <constant-name>userNameMask</constant-name>
+            <constant-value>
+             ^[a-zA-Z]{1}[a-zA-Z0-9_]*$
+            </constant-value>
+        </constant>
+    </global>
+
+    <formset>
+		<form name="inputForm"> 
+			<field property="userName" depends="minlength">
+				<arg0 key="inputForm.userName"/>
+				<arg1 key="${var:minlength}" name="minlength" resource="false"/>
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>5</var-value>
+				</var>
+			</field>
+		</form>
+
+		<form name="inputForm2"> 
+			<field property="userName" 
+			       depends="minlength,maxlength">
+				<arg0 key="inputForm.userName"/>
+				<arg1 key="${var:minlength}" 
+				      name="minlength" resource="false"/>
+				<arg1 key="${var:maxlength}" 
+				      name="maxlength" resource="false"/>				
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>5</var-value>
+				</var>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>11</var-value>
+				</var>				
+			</field>
+		</form>
+		
+		<form name="inputForm3"> 
+			<field property="userName" 
+			       depends="minlength,maxlength,mask">
+				<msg name="mask"      
+				     key="inputForm.userName.mask"/>
+				<arg0 key="inputForm.userName"/>
+				<arg1 key="${var:minlength}" 
+				      name="minlength" resource="false"/>
+				<arg1 key="${var:maxlength}" 
+				      name="maxlength" resource="false"/>
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>5</var-value>
+				</var>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>11</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${userNameMask}</var-value>
+					<!--
+					<var-value>^[a-zA-Z]{1}[a-zA-Z0-9_]*$</var-value>
+					-->
+				</var>
+			</field>
+		</form>
+	
+		<form name="inputForm4"> 
+			<field property="birthDate" 
+				       depends="date">
+				<arg0 key="inputForm.birthDate" />
+			    <var>
+			       <var-name>datePattern</var-name>
+			       <var-value>MM-dd-yyyy</var-value>
+			    </var>
+			</field>
+		</form>
+		
+		<form name="inputForm5"> 
+	        <field property="email" 
+				       depends="email">
+				<arg0 key="inputForm.email" />
+			</field>
+		</form>
+
+		<form name="inputForm6"> 
+	        <field property="creditCard" 
+				       depends="creditCard">
+				<arg0 key="inputForm.creditCard" />
+			</field>
+		</form>
+
+<!-- ALL -->
+
+
+
+
+
+		<form name="inputFormAll"> 
+		
+			<field property="userName" 
+			       depends="required,minlength,maxlength">
+				<arg0 key="inputForm.userName"/>
+				
+				<arg1 key="${var:minlength}" 
+				      name="minlength" resource="false"/>
+				<arg1 key="${var:maxlength}" 
+				      name="maxlength" resource="false"/>
+				      
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>5</var-value>
+				</var>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>11</var-value>
+				</var>
+			</field>
+			
+	        <field property="firstName" 
+				       depends="required">
+				<arg0 key="inputForm.firstName" />
+			</field>
+			
+			<field property="passwordCheck"
+			          depends="validateel">
+			     <arg0 key="inputForm.passwordCheck"/>
+			    <var>
+			       <var-name>test</var-name>
+			       <var-value>
+			        ${value==form.password}
+			       </var-value>
+			    </var>			               
+            </field>
+
+	        <field property="lastName" 
+				       depends="required">
+				<arg0 key="inputForm.lastName" />
+			</field>
+
+	        <field property="website" 
+				       depends="required">
+				<arg0 key="inputForm.website" />
+			</field>
+
+			<field property="birthDate" 
+				       depends="required,date">
+				<arg0 key="inputForm.birthDate" />
+			    <var>
+			       <var-name>datePattern</var-name>
+			       <var-value>MM-dd-yyyy</var-value>
+			    </var>
+			</field>
+
+	        <field property="email" 
+				       depends="required,email">
+				<arg0 key="inputForm.email" />
+			</field>
+
+            <!--
+	        <field property="phone" 
+				       depends="required,phone">
+				<arg0 key="inputForm.phone" />
+			</field>
+			-->
+			
+	        <field property="phone" 
+				       depends="required,phoneext">
+				<arg0 key="inputForm.phone" />
+			    <var>
+			       <var-name>allowLocal</var-name>
+			       <var-value>true</var-value>
+			    </var>			
+			</field>
+			
+
+	        <field property="creditCard" 
+				       depends="creditCard">
+				<arg0 key="inputForm.creditCard" />
+			</field>
+
+
+		</form>
+
+
+
+
+		<form name="inputFormAllNoValidate"> 
+		
+			<field property="userName" 
+			       depends="required,minlength,maxlength">
+				<arg0 key="inputForm.userName"/>
+				
+				<arg1 key="${var:minlength}" 
+				      name="minlength" resource="false"/>
+				<arg1 key="${var:maxlength}" 
+				      name="maxlength" resource="false"/>
+				      
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>5</var-value>
+				</var>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>11</var-value>
+				</var>
+			</field>
+			
+	        <field property="firstName" 
+				       depends="required">
+				<arg0 key="inputForm.firstName" />
+			</field>
+
+	        <field property="lastName" 
+				       depends="required">
+				<arg0 key="inputForm.lastName" />
+			</field>
+
+	        <field property="website" 
+				       depends="required">
+				<arg0 key="inputForm.website" />
+			</field>
+
+			<field property="birthDate" 
+				       depends="required,date">
+				<arg0 key="inputForm.birthDate" />
+			    <var>
+			       <var-name>datePattern</var-name>
+			       <var-value>MM-dd-yyyy</var-value>
+			    </var>
+			</field>
+
+	        <field property="email" 
+				       depends="required,email">
+				<arg0 key="inputForm.email" />
+			</field>
+
+            <!--
+	        <field property="phone" 
+				       depends="required,phone">
+				<arg0 key="inputForm.phone" />
+			</field>
+			-->
+			
+	        <field property="phone" 
+				       depends="required,phoneext">
+				<arg0 key="inputForm.phone" />
+			    <var>
+			       <var-name>allowLocal</var-name>
+			       <var-value>true</var-value>
+			    </var>			
+			</field>
+			
+
+	        <field property="creditCard" 
+				       depends="creditCard">
+				<arg0 key="inputForm.creditCard" />
+			</field>
+			
+			<field property="password"
+			       depends="requiredif">
+			       <arg0 key="inputForm.passwordCheck" />
+			    <var>
+			       <var-name>field[0]</var-name>
+			       <var-value>passwordCheck</var-value>
+			    </var>			
+			    <var>
+			       <var-name>fieldTest[0]</var-name>
+			       <var-value>EQUALS</var-value>
+			    </var>			
+			    <var>
+			       <var-name>fieldValue[0]</var-name>
+			       <var-value>foo</var-value>
+			    </var>			
+
+			</field>
+
+
+		</form>
+
+
+		<form name="inputFormTwoStep"> 
+		
+			<field property="userName" 
+			       depends="required,minlength,maxlength"
+			       page='0'	>
+				<arg0 key="inputForm.userName"/>
+				
+				<arg1 key="${var:minlength}" 
+				      name="minlength" resource="false"/>
+				<arg1 key="${var:maxlength}" 
+				      name="maxlength" resource="false"/>
+				      
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>5</var-value>
+				</var>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>11</var-value>
+				</var>
+			</field>
+			
+	        <field property="firstName" 
+				       depends="required"
+				       page='0'	>
+				<arg0 key="inputForm.firstName" />
+			</field>
+
+	        <field property="lastName" 
+				       depends="required"
+				       page='0'	>
+				<arg0 key="inputForm.lastName" />
+			</field>
+
+	        <field property="website" 
+				       depends="required"
+				       page='1'	>
+				<arg0 key="inputForm.website" />
+			</field>
+
+			<field property="birthDate" 
+				       depends="required,date"
+				       page='1'>
+				<arg0 key="inputForm.birthDate" />
+			    <var>
+			       <var-name>datePattern</var-name>
+			       <var-value>MM-dd-yyyy</var-value>
+			    </var>
+			</field>
+
+	        <field property="email" 
+				       depends="required,email"
+				       page='1'>
+				<arg0 key="inputForm.email" />
+			</field>
+			
+	        <field property="phone" 
+				       depends="required,phoneext"
+				       page='1'>
+				<arg0 key="inputForm.phone" />
+			    <var>
+			       <var-name>allowLocal</var-name>
+			       <var-value>true</var-value>
+			    </var>			
+			</field>
+						
+		</form>
+
+	</formset>	
+
+
+	
+</form-validation>
+  ) 
